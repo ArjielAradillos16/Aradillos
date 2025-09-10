@@ -1,39 +1,406 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  font-family:'Times New Roman', Times, serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* Hamburger button container */
+.hamburger {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1002; /* above sidebar */
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #4CAF50;
+  padding: 5px 7px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.hamburger:hover {
+  background: #45a049;
+}
+
+/* Hamburger bars */
+.hamburger span {
+  display: block;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.4s ease;
+  transform-origin: left center;
+}
+
+/* Animate hamburger to X */
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Sidebar */
+/* Sidebar default (collapsed) */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 60px;
+  background-color: #333;
+  color: white;
+  transition: width 0.4s ease;
+  z-index: 1000;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* Center icons horizontally */
+  justify-content: center;     /* Center icons vertically */
+  padding-top: 0;              /* remove top padding */
+  padding-left: 0;
+}
+
+/* Sidebar when open (expanded) */
+.sidebar.open {
+  width: 220px;
+  align-items: flex-start;      /* Align icons + text to start */
+  justify-content: flex-start; /* Stack top-down again */
+  padding-top: 80px;
+  padding-left: 20px;
+}
+
+
+.sidebar a {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: white;
+  border-radius: 4px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.3s, padding 0.3s;
+}
+
+
+.sidebar a:hover {
+  background-color: #000000;
+}
+
+/* Icon inside links */
+.sidebar a .icon {
+  font-size: 28px;
+  margin-right: 10px; /* ~1cm spacing */
+  pointer-events: none; /* disable icon clicks */
+  color: #aaa;
+  transition: color 0.3s ease;
+  width: 24px; /* fixed width for alignment */
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Highlight icon of active section */
+.sidebar a.active .icon {
+  color: #9f51e2;
+}
+
+/* Hide text when sidebar is collapsed */
+.sidebar:not(.open) a span.text {
+  display: none;
+}
+
+/* Tooltip text on collapsed */
+.sidebar:not(.open) a:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 65px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: z#4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 14px;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 10000;
+}
+
+/* Sections */
+section {
+  min-height: 130vh;
+  padding: 100px 20px 40px;
+  margin-left: 30px; /* space for collapsed sidebar */
+  transition: margin-left 0.4s ease;
+}
+
+/* When sidebar open, add margin for expanded sidebar */
+.sidebar.open ~ section {
+  margin-left: 200px;
+}
+
+#home {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+#home::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(image/wer.jpg) no-repeat center center/cover;
+  filter: blur(8px);
+  z-index: -1;
+  transform: scale(1.05); /* Prevent edge cropping */
+  opacity: 0.9; /* Optional: makes it a bit dimmer for readability */
+}
+#about {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+#about::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(image/wer.jpg) no-repeat center center/cover;
+  filter: blur(8px);
+  z-index: -1;
+  transform: scale(1.05); /* Prevent edge cropping */
+  opacity: 0.9; /* Optional: makes it a bit dimmer for readability */
+}
+
+#projects { background: #d0e1f9; }
+#contact { background: #fce4ec; }
+
+/* Scroll button */ 
+.scroll-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 1001;
+}
+
+/*THIS SECTION IS FOR MY ABOUT PAGE*/
+ body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background-color: #f4f4f4;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    .hero-text {
+      max-width: 500px;
+      margin-left: 250px;
+    }
+
+    .hero-text h1 {
+      font-size: 30px;;
+      margin: 0 0 10px;
+      color: #1212e7;
+    }
+    .hero-text p1{
+      font-size: 20px;
+      justify-content:baseline;
+      color: #000000;
+      font-weight: bold;
+    }
+    .hero-text p {
+      font-size: 25px;
+      justify-content:baseline;
+      color: #000000;
+      font-weight: bold;
+    line-height: 1.6;           /* 👈 better spacing between lines */
+  word-wrap: break-word;      /* 👈 makes long words break nicely */
+  white-space: normal; 
+    }
+
+    .typewriter-effect {
+      display: inline;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: #dfe3df;
+      margin-left: 3px;
+      animation: blink 0.7s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .image1 img {
+      width: 300px;
+      height: 350px;
+      border-radius: 30%;
+      object-fit: cover;
+      border: 3px solid #000000;
+      box-shadow: 0 4px 8px rgba(251, 248, 248, 0.1);
+      margin-top: 75px;
+      margin-left: 200px;
+    }
+     .image img{
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #4CAF50;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-top: 75px;
+      margin-left: 90px;
+    }
+    .about {
+  background-color: rgba(255, 255, 255, 0.4); /* semi-transparent white */
+  backdrop-filter: blur(10px); /* 🎯 this adds the blur effect */
+  -webkit-backdrop-filter: blur(10px); /* for Safari support */
+  border: 2px solid rgba(255, 255, 255, 0.3); /* softer border */
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  max-width: 150%;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 50px;
+}
+
+
+    .aboutme {
+  font-size: 20px;
+  color: #000000;
+  font-weight: normal;
+  margin-top: 15px;
+  line-height: 1.6;
+  white-space: normal;
+}
+/* Position icons in the upper-right corner of Home section */
+.Social-Media {
+  position: absolute;
+  top: 50px;
+  right: 200px;
+  z-index: 10;
+  display: flex;
+  gap: 15px;
+}
+
+.Social-Media a i {
+  font-size: 40px;
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+.Social-Media a i:hover {
+  color: #4b2ace; /* Green hover effect */
+}
+
+/* -------------------------------------------- */
+/* ✅ Responsive Enhancements for Smaller Screens */
+/* -------------------------------------------- */
+@media (max-width: 768px) {
+  /* Stack elements vertically */
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  /* Center text and remove left margin */
+  .hero-text {
+    margin-left: 0;
     text-align: center;
-}
+  }
 
-header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-}
+  /* Make images scale down on smaller screens */
+  .image1 img,
+  .image img {
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+    margin: 20px 0;
+  }
 
-main {
-    padding: 40px 20px;
-}
+  /* Collapse sidebar to bottom navigation bar */
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
 
-.image-container {
-    display: flex;
+  /* Hide text inside sidebar icons */
+  .sidebar a .text {
+    display: none;
+  }
+
+  /* Adjust section margins when sidebar is at bottom */
+  section {
+    margin-left: 0 !important;
+    padding-top: 120px; /* Space to avoid overlap with hamburger */
+  }
+
+  /* Reposition top-right home icons */
+  .Social-Media {
+    top: 20px;
+    right: 20px;
     justify-content: center;
-    margin-top: 20px;
-}
+  }
 
-.image-container img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border: 3px solid #4CAF50;
-}
+  /* Scale down fonts slightly */
+  .hero-text p,
+  .aboutme,
+  .hero-text h1 {
+    font-size: 16px;
+  }
 
-footer {
-    background-color: #ddd;
-    padding: 15px 0;
-    margin-top: 250px;
+  /* Scroll button spacing */
+  .scroll-button {
+    bottom: 70px; /* move it above the new bottom nav */
+  }
 }

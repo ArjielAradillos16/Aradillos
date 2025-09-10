@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smooth Sidebar with Icons</title>
+  <link rel="stylesheet" href="Style.css">
+
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Hamburger Button -->
+  <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar" id="sidebar">
+    <a href="#home" data-tooltip="Home" id="link-home">
+      <i class="fas fa-home icon"></i>
+      <span class="text">Home</span>
+    </a>
+    <a href="#about" data-tooltip="About" id="link-about">
+      <i class="fas fa-user icon"></i>
+      <span class="text">About</span>
+    </a>
+    <a href="#projects" data-tooltip="Projects" id="link-projects">
+      <i class="fas fa-briefcase icon"></i>
+      <span class="text">Projects</span>
+    </a>
+    <a href="#contact" data-tooltip="Contact" id="link-contact">
+      <i class="fas fa-envelope icon"></i>
+      <span class="text">Contact</span>
+    </a>
+  </nav>
+
+  <!-- Scroll to Contact Button -->
+  <button class="scroll-button" onclick="scrollToSection('contact')">
+    Contact Me
+  </button>
+
+  <!-- Scroll Sections -->
+  <section id="home">Loading Home...</section>
+  <section id="about">Loading About...</section>
+  <section id="projects">Loading Projects...</section>
+  <section id="contact">Loading Contact...</section>
+
+  <script>
+    async function loadContent(sectionId, file) {
+  try {
+    const res = await fetch(file);
+    const html = await res.text();
+    const section = document.getElementById(sectionId);
+
+    section.innerHTML = html;
+
+    // Extract and execute inline scripts
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    const scripts = tempDiv.querySelectorAll('script');
+
+    scripts.forEach(script => {
+      const newScript = document.createElement('script');
+      if (script.src) {
+        newScript.src = script.src;
+      } else {
+        newScript.textContent = script.textContent;
+      }
+      document.body.appendChild(newScript);
+    });
+
+  } catch (err) {
+    document.getElementById(sectionId).innerHTML = `<p>Failed to load ${file}</p>`;
+  }
+}
+
+
+    loadContent('home', 'Homepage.html');
+    loadContent('about', 'About.html');
+    loadContent('projects', 'Projects.html');
+    loadContent('contact', 'Contact.html');
+
+    function scrollToSection(id) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburger');
+    const links = document.querySelectorAll('.sidebar a');
+    const sections = document.querySelectorAll('section');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      const expanded = hamburger.classList.contains('open');
+      hamburger.setAttribute('aria-expanded', expanded);
+    }
+
+    hamburger.addEventListener('click', toggleSidebar);
+
+    // Smooth scroll for sidebar links (text) & optional close on click
+    links.forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+        // Uncomment to close sidebar on link click:
+        // toggleSidebar();
+      });
+    });
+
+    // Keyboard accessibility for hamburger button
+    hamburger.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleSidebar();
+      }
+    });
+
+    // Scroll spy logic to highlight active link's icon only
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120; // offset for nav height
+        const sectionHeight = section.clientHeight;
+
+        if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      links.forEach(link => {
+        if (link.getAttribute('href').substring(1) === current) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    });
+
+  </script>
+
+</body>
+</html>

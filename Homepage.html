@@ -3,27 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Portfolio</title>
-    <link rel="Stylesheet" href="Style.css">
+    <title>Document</title>
+<link rel="stylesheet" href="Style.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Portfolio</h1>
-    </header>
 
-    <main>
-        <h2>Hello, I'm Arjiel Aradillos</h2>
-        <p>A Future Web Developer/Designer </p>
-        
-        
-        <div class="image-container">
-            <img src="image/wow.jpg" alt="Profile Picture">
-        </div>
-        
-    </main>
+  <div class="hero">
+    <div class="hero-text">
+      <h1>I am Arjiel V. Aradillos</h1>
+      <p>
+        A Future <span class="typewriter-effect" id="typewriter"></span><span class="cursor"></span>
+      </p>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 Arjiel Aradillos. All rights reserved.</p>
-    </footer>
+<div class="Social-Media">
+  <a href="https://www.facebook.com/arjiel.aradillos" target="_blank">
+    <i class="fab fa-facebook"></i>
+  </a>
+  <a href="https://www.linkedin.com/in/arjiel-aradillos-2b425b380/" target="_blank">    
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <a href="https://github.com/ArjielAradillos16">
+    <i class="fab fa-github"></i>
+  </a>
+</div>
+    <div class="image1">
+      <img src="image/wow.jpg" alt="Profile Picture" />
+    </div>
+  </div>
+
+  <script>
+    const words = ["Web Developer", "Web Designer"];
+    let currentWordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingSpeed = 90;
+    const pauseTime = 500; // Pause at full word
+
+    const typewriter = document.getElementById("typewriter");
+
+    function type() {
+      const currentWord = words[currentWordIndex];
+      const visibleText = currentWord.substring(0, charIndex);
+      typewriter.textContent = visibleText;
+
+      if (!isDeleting) {
+        if (charIndex < currentWord.length) {
+          charIndex++;
+          setTimeout(type, typingSpeed);
+        } else {
+          // Wait before deleting
+          isDeleting = true;
+          setTimeout(type, pauseTime);
+        }
+      } else {
+        if (charIndex > 0) {
+          charIndex--;
+          setTimeout(type, typingSpeed / 2);
+        } else {
+          // Move to next word
+          isDeleting = false;
+          currentWordIndex = (currentWordIndex + 1) % words.length;
+          setTimeout(type, typingSpeed);
+        }
+      }
+    }
+
+    // Start the typing effect
+    type();
+  </script>
+
 </body>
 </html>
