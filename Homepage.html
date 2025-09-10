@@ -16,6 +16,8 @@
       </p>
     </div>
 
+
+<!-- Structure sa Social media links and icons -->
 <div class="Social-Media">
   <a href="https://www.facebook.com/arjiel.aradillos" target="_blank">
     <i class="fab fa-facebook"></i>
@@ -23,22 +25,24 @@
   <a href="https://www.linkedin.com/in/arjiel-aradillos-2b425b380/" target="_blank">    
     <i class="fab fa-linkedin"></i>
   </a>
-  <a href="https://github.com/ArjielAradillos16">
+  <a href="https://www.github.com/ArjielAradillos16">
     <i class="fab fa-github"></i>
   </a>
 </div>
+  <!--Structure sa image -->
     <div class="image1">
       <img src="image/wow.jpg" alt="Profile Picture" />
     </div>
   </div>
 
+  <!--Structure sa javascript para mag typewriter animation sha -->
   <script>
     const words = ["Web Developer", "Web Designer"];
     let currentWordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
     const typingSpeed = 90;
-    const pauseTime = 500; // Pause at full word
+    const pauseTime = 500;
 
     const typewriter = document.getElementById("typewriter");
 
@@ -52,7 +56,7 @@
           charIndex++;
           setTimeout(type, typingSpeed);
         } else {
-          // Wait before deleting
+          
           isDeleting = true;
           setTimeout(type, pauseTime);
         }
@@ -61,7 +65,7 @@
           charIndex--;
           setTimeout(type, typingSpeed / 2);
         } else {
-          // Move to next word
+          
           isDeleting = false;
           currentWordIndex = (currentWordIndex + 1) % words.length;
           setTimeout(type, typingSpeed);
@@ -69,7 +73,7 @@
       }
     }
 
-    // Start the typing effect
+    
     type();
   </script>
 

@@ -6,19 +6,19 @@
   <title>Smooth Sidebar with Icons</title>
   <link rel="stylesheet" href="Style.css">
 
-  <!-- Font Awesome for icons -->
+  <!-- structure  para sa icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- Hamburger Button -->
+  <!-- structure ni para sa Hamburger button -->
   <div class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" role="button" tabindex="0">
     <span></span>
     <span></span>
     <span></span>
   </div>
 
-  <!-- Sidebar Navigation -->
+  <!--Structure sa sidebar og mga icons-->
   <nav class="sidebar" id="sidebar">
     <a href="#home" data-tooltip="Home" id="link-home">
       <i class="fas fa-home icon"></i>
@@ -38,17 +38,20 @@
     </a>
   </nav>
 
-  <!-- Scroll to Contact Button -->
+  
   <button class="scroll-button" onclick="scrollToSection('contact')">
     Contact Me
   </button>
 
-  <!-- Scroll Sections -->
+  <!-- Structure ni para Sections -->
   <section id="home">Loading Home...</section>
   <section id="about">Loading About...</section>
   <section id="projects">Loading Projects...</section>
   <section id="contact">Loading Contact...</section>
 
+
+
+  <!--Structure ni sa javascipt para mag scroll sha-->
   <script>
     async function loadContent(sectionId, file) {
   try {
@@ -58,7 +61,7 @@
 
     section.innerHTML = html;
 
-    // Extract and execute inline scripts
+    
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
     const scripts = tempDiv.querySelectorAll('script');
@@ -105,7 +108,7 @@
 
     hamburger.addEventListener('click', toggleSidebar);
 
-    // Smooth scroll for sidebar links (text) & optional close on click
+    
     links.forEach(link => {
       link.addEventListener('click', function (e) {
         e.preventDefault();
@@ -113,12 +116,11 @@
         if (target) {
           target.scrollIntoView({ behavior: 'smooth' });
         }
-        // Uncomment to close sidebar on link click:
-        // toggleSidebar();
+       
       });
     });
 
-    // Keyboard accessibility for hamburger button
+    
     hamburger.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -126,11 +128,11 @@
       }
     });
 
-    // Scroll spy logic to highlight active link's icon only
+    
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(section => {
-        const sectionTop = section.offsetTop - 120; // offset for nav height
+        const sectionTop = section.offsetTop - 120;
         const sectionHeight = section.clientHeight;
 
         if (pageYOffset >= sectionTop && pageYOffset < sectionTop + sectionHeight) {
